@@ -1,18 +1,10 @@
 import * as THREE from "three"
 
 const sceneMiddle = new THREE.Vector3(0, 0, 0)
-const colors = [0xffffff, 0xff0000]
 
 function getMesh(){
     const geometry = new THREE.DodecahedronGeometry(0.5, 2)
-    const options = {
-        color: colors[Math.round(Math.random())],
-        emissive: colors[Math.round(Math.random())],
-        emissiveIntensity: 0.5,
-        metalness: 0.8,
-        roughness: 0.5
-    }
-    const material = new THREE.MeshPhysicalMaterial(options)
+    const material = new THREE.MeshPhysicalMaterial()
     return new THREE.Mesh(geometry, material)
 }
 
