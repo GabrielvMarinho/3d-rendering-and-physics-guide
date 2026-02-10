@@ -24,13 +24,10 @@ Once you have a visual representation of an object, you can create an invisible 
 
 code example with RAPIER.js
 ```js
+const world = new RAPIER.World({ x:0, y:0, z:0 })
 const rigidBodyDesc = RAPIER.RigidBodyDesc.dynamic().setTranslation(0, 0, 0);
 let rigidBody = world.createRigidBody(rigidBodyDesc)
-const collider = world.createCollider(
-    RAPIER.ColliderDesc.cuboid(1, 1, 1),
-    body
-);
-new RAPIER.World({ x:0, y:0, z:0 }).createCollider(colliderDesc, rigidBody)
+world.createCollider(RAPIER.ColliderDesc.cuboid(1, 1, 1), rigidBody)
 ```
 
 ## Syncing
