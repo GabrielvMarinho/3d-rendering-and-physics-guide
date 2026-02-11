@@ -49,7 +49,7 @@ world.createCollider(
 )
 
 /* ------------------ PLANE (DYNAMIC, FALLS) ------------------ */
-const planeGeometry = new THREE.PlaneGeometry(1, 1, 10, 10)
+const planeGeometry = new THREE.PlaneGeometry(1, 1, 20, 20)
 const planeMesh = new THREE.Mesh(
   planeGeometry,
   new THREE.MeshStandardMaterial({ color: "lightblue", side: THREE.DoubleSide})
@@ -58,8 +58,25 @@ planeMesh.position.set(0, 4, 0)
 
 scene.add(planeMesh)
 
+const positions = planeMesh.geometry.attributes.position.array
+const count = planeMesh.geometry.attributes.position.count
 
+for (let i = 0; i < count; i++) {
+  const idx = i * 3
 
+  // original vertex position
+  const x0 = positions[idx]
+  const y0 = positions[idx + 1]
+  const z0 = positions[idx + 2]
+
+  // add small random offsets to make it look wrinkled
+  positions[idx]     = x0 + (Math.random() - 0.5) * 0.04  // x small offset
+  positions[idx + 1] = y0 + (Math.random() - 0.5) * 0.04  // y small offset
+  positions[idx + 2] = z0 + (Math.random() - 0.5) * 0.04  // z small offset
+}
+
+planeMesh.geometry.attributes.position.needsUpdate = true
+planeMesh.geometry.computeVertexNormals()
 /* ------------------ LOOP ------------------ */
 
 
@@ -67,15 +84,7 @@ function animate() {
   requestAnimationFrame(animate)
 
   world.step()
-
-  // sync plane mesh with physics
-  // const p = planeBody.translation()
-  // const r = planeBody.rotation()
-  // planeMesh.position.set(p.x, p.y, p.z)
-  // planeMesh.quaternion.set(r.x, r.y, r.z, r.w)
-  // planeMesh.rotateX(-Math.PI / 2)
-
-
+  
   renderer.render(scene, camera)
 }
 
